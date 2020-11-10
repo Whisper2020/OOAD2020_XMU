@@ -1,9 +1,11 @@
 package com.j2ee.mytest;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan("com.j2ee.mytest.mapper")
 public class J2eeApplication {
 
     public static void main(String[] args) {
