@@ -28,25 +28,5 @@ public class OrderControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test
-    public void findOrderById() throws Exception{
-        String requireJson = null;
-        String responseString = null;
-        ResultActions res = null;
-
-        //正常查询
-        requireJson = "{\"id\":\"1\"}";
-        res = this.mvc.perform(post("/order/orders/{id}")
-                .contentType("application/json;charset=UTF-8")
-                .content(requireJson));
-        responseString = res.andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$.errno").value(ResponseCode.OK.getCode()))
-                .andExpect(jsonPath("$.errmsg").value("成功"))
-                .andExpect(jsonPath("$.data").isString())
-                .andReturn().getResponse().getContentAsString();
-        //endregion
-    }
-
 
 }
