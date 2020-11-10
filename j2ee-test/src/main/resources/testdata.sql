@@ -1,0 +1,3 @@
+LOCK TABLES `order_demo` WRITE;
+INSERT INTO `order_demo` VALUES (1,'2020-11-10',0);
+UNLOCK TABLES;
