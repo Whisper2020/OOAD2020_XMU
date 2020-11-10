@@ -57,6 +57,7 @@ public class Order{
         OrderPo po = new OrderPo();
         po.setId(this.getId());
         po.setState(this.getState());
+        po.setOrderSN(this.getOrderSN());
         return po;
     }
 

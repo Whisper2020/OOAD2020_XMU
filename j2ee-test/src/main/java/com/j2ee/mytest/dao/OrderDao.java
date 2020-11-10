@@ -14,13 +14,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class OrderDao {
+public class OrderDao{
     @Autowired
     private OrderPoMapper orderPoMapper;
-
-    @Autowired
-    private OrderDao orderDao;
-
 
     /**
      * 根据id查询订单
@@ -39,25 +35,29 @@ public class OrderDao {
             //logger.error(message.toString());
         }
         if (null == orders || orders.isEmpty()) {
-            return new ReturnObject<>();
+            //查询失败
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("订单id不存在：" + id));
         } else {
+            //查询成功
             Order order = new Order(orders.get(0));
             return new ReturnObject<>(order);
         }
     }
     /**
      * 修改订单
-     * @param order
+     * @param id
      * @return ReturnObject<Order>
      */
-    public ReturnObject<Order> updateOrder(Order order){
-        OrderPo orderPo = order.getOrderPo();
+    public ReturnObject<Order> updateOrder(Long id){
         ReturnObject<Order> retObj = null;
+        OrderPo orderPo = new OrderPo();
+        orderPo.setId(id);
+        orderPo.setState(1);//假设需要大批量的改订单状态
         try {
             int ret = orderPoMapper.updateByPrimaryKeySelective(orderPo);
             if (ret == 0) {
                 //修改失败
-                retObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("订单id不存在：" + orderPo.getId()));
+                retObj = new ReturnObject<>(ResponseCode.RESOURCE_ID_NOTEXIST, String.format("订单id不存在：" + id));
             } else {
                 //修改成功
                 retObj = new ReturnObject<>();

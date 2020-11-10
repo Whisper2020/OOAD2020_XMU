@@ -5,6 +5,7 @@ import com.j2ee.mytest.model.po.OrderPoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface OrderPoMapper {
