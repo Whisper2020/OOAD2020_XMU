@@ -9,6 +9,7 @@ import com.j2ee.mytest.util.ReturnObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ public class OrderService {
     @Autowired
     OrderDao orderDao;
 
+    @Transactional
     public ReturnObject<Object> updateOrder(Long id){
-        Order order = new Order();
-        order.setState(1);
-        ReturnObject<Order> retObj = orderDao.updateOrder(order);
+
+        ReturnObject<Order> retObj = orderDao.updateOrder(id);
         ReturnObject<Object> retOrder;
         if (retObj.getCode().equals(ResponseCode.OK)) {
             retOrder = new ReturnObject<>(retObj.getData());

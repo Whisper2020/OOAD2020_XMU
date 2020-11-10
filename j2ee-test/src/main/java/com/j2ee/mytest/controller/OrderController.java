@@ -49,7 +49,7 @@ public class OrderController {
     }
 
     /**
-     * 修改订单
+     * 修改订单状态
      * @param id
      * @return Object
      */
