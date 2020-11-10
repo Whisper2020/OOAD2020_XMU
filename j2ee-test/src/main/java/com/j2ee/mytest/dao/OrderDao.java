@@ -4,12 +4,14 @@ package com.j2ee.mytest.dao;
 import com.j2ee.mytest.mapper.OrderPoMapper;
 import com.j2ee.mytest.model.bo.Order;
 import com.j2ee.mytest.model.po.OrderPo;
+import com.j2ee.mytest.model.po.OrderPoExample;
 import com.j2ee.mytest.util.ResponseCode;
 import com.j2ee.mytest.util.ReturnObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import java.util.Objects;
+import java.util.List;
 
 @Repository
 public class OrderDao {
@@ -20,7 +22,29 @@ public class OrderDao {
     private OrderDao orderDao;
 
 
-
+    /**
+     * 根据id查询订单
+     * @param id
+     * @return ReturnObject<Order>
+     */
+    public ReturnObject<Order> findOrderById(Long id){
+        OrderPoExample example = new OrderPoExample();
+        OrderPoExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(id);
+        List<OrderPo> orders = null;
+        try {
+            orders = orderPoMapper.selectByExample(example);
+        } catch (DataAccessException e) {
+            StringBuilder message = new StringBuilder().append("getOrderById: ").append(e.getMessage());
+            //logger.error(message.toString());
+        }
+        if (null == orders || orders.isEmpty()) {
+            return new ReturnObject<>();
+        } else {
+            Order order = new Order(orders.get(0));
+            return new ReturnObject<>(order);
+        }
+    }
     /**
      * 修改订单
      * @param order

@@ -1,8 +1,11 @@
 package com.j2ee.mytest.model.bo;
 
+import com.j2ee.mytest.model.VoObject;
 import com.j2ee.mytest.model.po.OrderPo;
+import lombok.Data;
 
-public class Order {
+@Data
+public class Order{
     private Long id;
     private String orderSN;
     private Integer state;
@@ -56,4 +59,5 @@ public class Order {
         po.setState(this.getState());
         return po;
     }
+
 }
